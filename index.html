@@ -1,90 +1,265 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How Eyes Can See</title>
-  
-  <style>
-
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-h1 {
-    font-size: 36px;
-    color: #2b6cb0;
-}
-button {
-    font-size: 18px;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 10px;
-}
-.eye {
-    width: 200px;
-    height: 120px;
-    background: white;
-    border: 4px solid black;
-    border-radius: 50%;
-    margin: 30px auto;
-}
-.iris {
-    width: 70px;
-    height: 70px;
-    background: #4a90e2;
-    border-radius: 50%;
-    margin: 25px auto;
-}
-.pupil {
-    width: 30px;
-    height: 30px;
-    background: black;
-    border-radius: 50%;
-    margin: 20px auto;
-}
-.highlight {
-    width: 10px;
-    height: 10px;
-    background: white;
-    border-radius: 50%;
-    position: relative;
-    top: -25px;
-    left: 10px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>How Eyes Can See 👁️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #eef7ff;
+            color: #222;
+        }
+        header {
+            padding: 30px 20px 15px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #2b6cb0;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        /* =========================
+           EYE
+        ========================= */
+        .eye {
+            width: 200px;
+            height: 120px;
+            background: white;
+            border: 4px solid black;
+            border-radius: 50%;
+            margin: 30px auto;
+            position: relative;
+            transition: 0.4s;
+        }
+        .eye.active {
+            transform: scale(1.15);
+        }
+        .iris {
+            width: 70px;
+            height: 70px;
+            background: #4a90e2;
+            border-radius: 50%;
+            margin: 25px auto;
+            position: relative;
+        }
+        .pupil {
+            width: 30px;
+            height: 30px;
+            background: black;
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
+        }
+        .highlight {
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+        /* =========================
+           LIGHT
+        ========================= */
+        .light {
+            width: 18px;
+            height: 18px;
+            background: #ffd43b;
+            border-radius: 50%;
+            margin: 20px auto;
+            opacity: 0;
+            transform: translateX(-120px);
+            transition:
+                transform 1s ease,
+                opacity 0.5s ease;
+        }
+        .light.travel {
+            opacity: 1;
+            transform: translateX(120px);
+        }
+        /* =========================
+           BUTTON
+        ========================= */
+        button {
+            font-size: 18px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            background: #2b6cb0;
+            color: white;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        /* =========================
+           INFORMATION CARDS
+        ========================= */
+        .steps {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        .card h2 {
+            color: #2b6cb0;
+        }
+        .hidden {
+            display: none;
+        }
+        /* =========================
+           FOOTER
+        ========================= */
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background: #dbeafe;
+        }
+    </style>
 </head>
 <body>
-
-  <h1>How Eyes Can See 👁️</h1>
-
-  <p>Saya sedang belajar bagaimana mata bisa melihat.</p>
-  
-<div class="eye">
+<header>
+    <h1>
+        How Eyes Can See 👁️
+    </h1>
+    <p>
+        Learn how light enters your eye
+        and helps your brain see the world.
+    </p>
+</header>
+<!-- EYE -->
+<div class="eye" id="eye">
     <div class="iris">
         <div class="pupil">
-    <div class="highlight"></div>
-</div>
+            <div class="highlight"></div>
+        </div>
     </div>
 </div>
-  <button onclick="mulaiBelajar()">
-    Mulai
+<!-- LIGHT -->
+<div class="light" id="light"></div>
+<!-- BUTTON -->
+<button onclick="startLearning()">
+    ▶ Mulai
 </button>
+<button onclick="resetLearning()">
+    ↻ Reset
+</button>
+<!-- LEARNING STEPS -->
+<section class="steps">
+    <div class="card hidden" id="step1">
+        <h2>1. Cahaya masuk 💡</h2>
+        <p>
+            Cahaya dari benda di sekitar kita
+            masuk menuju mata.
+        </p>
+    </div>
+    <div class="card hidden" id="step2">
+        <h2>2. Pupil 👁️</h2>
+        <p>
+            Cahaya melewati pupil,
+            yaitu lubang di tengah iris.
+        </p>
+    </div>
+    <div class="card hidden" id="step3">
+        <h2>3. Lensa 🔍</h2>
+        <p>
+            Lensa membantu memfokuskan cahaya
+            menuju retina.
+        </p>
+    </div>
+    <div class="card hidden" id="step4">
+        <h2>4. Retina 🧠</h2>
+        <p>
+            Retina menerima cahaya dan
+            mengubahnya menjadi sinyal listrik.
+        </p>
+    </div>
+    <div class="card hidden" id="step5">
+        <h2>5. Saraf optik ⚡</h2>
+        <p>
+            Sinyal kemudian berjalan melalui
+            saraf optik menuju otak.
+        </p>
+    </div>
+    <div class="card hidden" id="step6">
+        <h2>6. Otak melihat 🧠✨</h2>
+        <p>
+            Otak mengolah sinyal tersebut
+            sehingga kita dapat melihat dunia.
+        </p>
+    </div>
+</section>
+<footer>
+    <p>
+        How Eyes Can See 👁️
+    </p>
+    <p>
+        Educational project
+    </p>
+</footer>
 <script>
-function mulaiBelajar() {
-    alert("Mari kita belajar bagaimana mata bisa melihat! 👁️");
+function startLearning() {
+    const eye =
+        document.getElementById("eye");
+    const light =
+        document.getElementById("light");
+    eye.classList.add("active");
+    light.classList.add("travel");
+    document.getElementById("step1")
+        .classList.remove("hidden");
+    setTimeout(function () {
+        document.getElementById("step2")
+            .classList.remove("hidden");
+    }, 1200);
+    setTimeout(function () {
+        document.getElementById("step3")
+            .classList.remove("hidden");
+    }, 2400);
+    setTimeout(function () {
+        document.getElementById("step4")
+            .classList.remove("hidden");
+    }, 3600);
+    setTimeout(function () {
+        document.getElementById("step5")
+            .classList.remove("hidden");
+    }, 4800);
+    setTimeout(function () {
+        document.getElementById("step6")
+            .classList.remove("hidden");
+    }, 6000);
+}
+function resetLearning() {
+    document
+        .getElementById("eye")
+        .classList.remove("active");
+    document
+        .getElementById("light")
+        .classList.remove("travel");
+    const steps =
+        document.querySelectorAll(".card");
+    steps.forEach(function(card) {
+        card.classList.add("hidden");
+    });
 }
 </script>
-
-  <p id="hasil"></p>
-  
-
-  <script>
-    function mulai() {
-      document.getElementById("hasil").innerText =
-        "Cahaya masuk lewat kornea, difokuskan lensa, ditangkap retina, lalu dikirim ke otak lewat saraf optik.";
-    }
-  </script>
-
 </body>
 </html>
